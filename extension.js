@@ -1,20 +1,25 @@
-//
-// Soundswitch
-// Switch the audio output device in the system status area.
-//
-// Benedict Etzel <developer@beheh.de>
-// Based on Advanced Volume Mixer by Harry Karvonen <harry.karvonen@gmail.com>
-//
-//
+/*
+ * Soundswitch
+ * Switch the audio output device in the system status area.
+ * 
+ * Developer: Benedict Etzel <developer@beheh.de>
+ * Based on Advanced Volume Mixer by Harry Karvonen <harry.karvonen@gmail.com>
+ */
 
 const Clutter = imports.gi.Clutter;
 const Lang = imports.lang;
 const Gvc = imports.gi.Gvc;
 const Signals = imports.signals;
-const St = imports.gi.St;
 
 const Main = imports.ui.main;
 const PopupMenu = imports.ui.popupMenu;
+
+const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
+const Convenience = Me.imports.convenience;
+
+const Gettext = imports.gettext.domain('gnome-shell-extensions');
+const _ = Gettext.gettext;
 
 let soundswitch;
 
@@ -36,11 +41,11 @@ Soundswitch.prototype = {
     this._streamRemovedId = this.control.connect("stream-removed", Lang.bind(this, this._streamRemoved));
     this._defaultSinkChangedId = this.control.connect("default-sink-changed", Lang.bind(this, this._defaultSinkChanged));
 
-    // Add selector
+    // Add selector to menu
     this.section.addMenuItem(this.switchMenu);
     this.menu.menu.addMenuItem(this.section, this.menu.menu.numMenuItems - 2);
 
-    // Add streams
+    // Populate menu with streams
     let streams = this.control.get_streams();
     for (let i = 0; i < streams.length; i++) {
       this._streamAdded(this.control, streams[i].id);
@@ -87,9 +92,11 @@ Soundswitch.prototype = {
   },
 
   _defaultSinkChanged: function(control, id) {
-    /*for (let output in this.outputs) {
-      this.outputs[output].setShowDot(output == id);
-    }*/
+    for (let output in this.outputs) {
+      if(output == id) {
+        // not yet implemented
+      }
+    }
   },
 
   destroy: function() {
@@ -103,12 +110,8 @@ Soundswitch.prototype = {
 
 Signals.addSignalMethods(Soundswitch.prototype);
 
-function main() {
-  init();
-  enable();
-}
-
-function init() {
+function init(metadata) {
+Convenience.initTranslations();
 }
 
 function enable() {
