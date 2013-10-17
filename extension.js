@@ -16,14 +16,13 @@ const St = imports.gi.St;
 const Main = imports.ui.main;
 const PopupMenu = imports.ui.popupMenu;
 
-let advMixer;
+let soundswitch;
 
-function AdvMixer(menu, soundcontrol) {
+function Soundswitch(menu, soundcontrol) {
   this._init(menu, soundcontrol);
 }
 
-
-AdvMixer.prototype = {
+Soundswitch.prototype = {
   _init: function(menu, soundcontrol) {
     this.menu = menu;
     this.control = soundcontrol._control;
@@ -37,7 +36,7 @@ AdvMixer.prototype = {
     this._streamRemovedId = this.control.connect("stream-removed", Lang.bind(this, this._streamRemoved));
     this._defaultSinkChangedId = this.control.connect("default-sink-changed", Lang.bind(this, this._defaultSinkChanged));
 
-    // Add the selector
+    // Add selector
     this.section.addMenuItem(this.switchMenu);
     this.menu.menu.addMenuItem(this.section, this.menu.menu.numMenuItems - 2);
 
@@ -102,8 +101,7 @@ AdvMixer.prototype = {
   }
 };
 
-Signals.addSignalMethods(AdvMixer.prototype);
-
+Signals.addSignalMethods(Soundswitch.prototype);
 
 function main() {
   init();
@@ -113,18 +111,16 @@ function main() {
 function init() {
 }
 
-
 function enable() {
-  //if (Main.panel.statusArea.aggregateMenu['volume'] && !advMixer) {
-    advMixer = new AdvMixer(Main.panel.statusArea.aggregateMenu, Main.panel.statusArea.aggregateMenu._volume);
-  //}
+  if (!soundswitch) {
+    soundswitch = new Soundswitch(Main.panel.statusArea.aggregateMenu, Main.panel.statusArea.aggregateMenu._volume);
+  }
 }
 
-
 function disable() {
-  if (advMixer) {
-    advMixer.destroy();
-    advMixer = null;
+  if (soundswitch) {
+    soundswitch.destroy();
+    soundswitch = null;
   }
 }
 
