@@ -15,7 +15,7 @@ Known issues
 ------------
 
 * The currently selected output is not highlighted
-* When locking and unlocking Gnome Shell the icon appears twice in the menu
+* Extension is not yet localised 
 
 
 Attributions

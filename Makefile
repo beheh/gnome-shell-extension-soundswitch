@@ -1,5 +1,5 @@
 
-VERSION=0.8
+VERSION=0.9
 PKG=Soundswitch@developer.beheh.de
 
 deploy: Soundswitch-$(VERSION).zip
