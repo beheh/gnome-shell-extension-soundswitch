@@ -104,6 +104,9 @@ Soundswitch.prototype = {
     this.control.disconnect(this._streamRemovedId);
     this.control.disconnect(this._defaultSinkChangedId);
 
+    // Remove menu item
+    this.section.destroy();
+
     this.emit("destroy");
   }
 };
