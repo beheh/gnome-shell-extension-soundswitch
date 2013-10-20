@@ -16,7 +16,7 @@ const PopupMenu = imports.ui.popupMenu;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
-const Convenience = Me.imports.convenience;
+//const Convenience = Me.imports.convenience;
 
 const Gettext = imports.gettext.domain('gnome-shell-extensions');
 const _ = Gettext.gettext;
@@ -111,7 +111,7 @@ Soundswitch.prototype = {
 Signals.addSignalMethods(Soundswitch.prototype);
 
 function init(metadata) {
-Convenience.initTranslations();
+  //Convenience.initTranslations();
 }
 
 function enable() {
